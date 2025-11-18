@@ -1,4 +1,5 @@
 from selenium import webdriver
+import pandas as pd
 
 web = 'https://www.thesun.co.uk/sport/football/'
 
@@ -7,15 +8,31 @@ web = 'https://www.thesun.co.uk/sport/football/'
 driver = webdriver.Chrome()
 driver.get(web)
 
+
 # Finding Elements
 
 # explore the browser Inspect tab and find the right elements
 # use xpath; can also use classname, id, or other attributes
 containers = driver.find_elements(by='xpath', value='//div[@class="story__copy-container"]')
 
+titles = []
+subtitles = []
+links = []
+
 # driver.find_element(by='xpath', value='//div[@class="story__copy-container"]/a/p')
 for container in containers:
     title = container.find_element(by='xpath', value='./a/p').text
     subtitle = container.find_element(by='xpath', value='./a/h3').text
+    link = container.find_element(by='xpath', value='./a').get_attribute('href')
+    titles.append(title)
+    subtitles.append(subtitle)
+    links.append(link)
 
-    container.find_element(by='xpath', value='./a').get_attribute('href')
+
+# Exporting data to a CSV file
+
+headlines_dict = {'title': titles, 'subtitle': subtitles, 'link': links }
+df_headlines = pd.DataFrame(headlines_dict)
+df_headlines.to_csv('headline.csv')
+
+driver.quit()
