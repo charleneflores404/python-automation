@@ -1,11 +1,18 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import pandas as pd
 
 web = 'https://www.thesun.co.uk/sport/football/'
 
+
+# Set up Chrome in headless mode (run in the background without launching the driver)
+options = Options()
+options.add_argument("--headless=new")
+
+
 # Creating the driver
 
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(options=options)
 driver.get(web)
 
 
@@ -33,6 +40,6 @@ for container in containers:
 
 headlines_dict = {'title': titles, 'subtitle': subtitles, 'link': links }
 df_headlines = pd.DataFrame(headlines_dict)
-df_headlines.to_csv('headline.csv')
+df_headlines.to_csv('headline-headless.csv')
 
 driver.quit()
