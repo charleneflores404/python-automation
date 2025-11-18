@@ -1,6 +1,16 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import pandas as pd
+from datetime import datetime
+import os
+import sys
+
+# to export the file where the executable file will be located
+application_path = os.path.dirname(sys.executable) 
+
+now = datetime.now()
+month_day_year = now.strftime('%m%d%Y') #MMDDYYYY
+
 
 web = 'https://www.thesun.co.uk/sport/football/'
 
@@ -40,6 +50,9 @@ for container in containers:
 
 headlines_dict = {'title': titles, 'subtitle': subtitles, 'link': links }
 df_headlines = pd.DataFrame(headlines_dict)
-df_headlines.to_csv('headline-headless.csv')
+# df_headlines.to_csv(f'{application_path}/headline-{month_day_year}.csv')
+file_name = f'headline-{month_day_year}.csv' # add date to differentiate the files
+final_path = os.path.join(application_path, file_name) # avoid issues on / or \ in paths which is os-dependent
+df_headlines.to_csv(final_path)
 
 driver.quit()
