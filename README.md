@@ -22,3 +22,9 @@ Webscraping for getting headlines of the football news. This saves you time from
 1. Manual (launches the driver)
 1. Headless (runs in the background)
 1. Automated, scheduled every morning
+
+---
+
+---
+
+Following freeCodeCamp's YouTube [tutorial video](https://youtu.be/PXMJ6FS7llk) by Frank Andrade aka PyCoach
